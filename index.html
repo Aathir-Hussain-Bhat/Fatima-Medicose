@@ -11,6 +11,7 @@
     <meta name="keywords" content="Fatima Medicose, Pharmacy Barsoo, Medical Store Gulshan Mohalla, Jammu Kashmir Pharmacy, Medicines Barsoo, Lab Tests Barsoo, Doctor Consultation J&K">
     <meta name="author" content="Fatima Medicose">
     <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0F766E">
     <link rel="canonical" href="https://fatimamedicose.in/">
 
     <!-- Favicon -->
@@ -35,9 +36,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- FontAwesome 6 Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-fontawesome/6.5.1/css/all.min.css">
-
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -61,7 +59,7 @@
                         },
                         bodyBg: '#F8FAFC',
                         darkText: '#111827',
-                        mutedText: '#6B7280',
+                        mutedText: '#4B5563', // Darkened for WCAG AA contrast
                         success: '#22C55E',
                         danger: '#EF4444',
                         warning: '#F59E0B',
@@ -78,6 +76,10 @@
             }
         }
     </script>
+
+    <!-- Font Awesome (Loaded AFTER Tailwind to prevent cascade overrides) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'">
 
     <style>
         body {
@@ -97,29 +99,108 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(8px);
         }
+        
         /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #F8FAFC;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #0F766E;
-            border-radius: 4px;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F8FAFC; }
+        ::-webkit-scrollbar-thumb { background: #0F766E; border-radius: 4px; }
+        
         /* Pulse Animation */
         @keyframes subtlePulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
-        .animate-pulse-subtle {
-            animation: subtlePulse 3s infinite ease-in-out;
-        }
+        .animate-pulse-subtle { animation: subtlePulse 3s infinite ease-in-out; }
+        
         /* Drag active border effect */
         .drag-active {
             border-color: #0F766E !important;
             background-color: #CCFBF1 !important;
+        }
+
+        /* === ICON RENDER GUARANTEE (Fixes icons not showing) === */
+        i.fa-solid, i.fa-regular, i.fa-brands, i.fas, i.far, i.fab,
+        [class^="fa-"], [class*=" fa-"] {
+            font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 6 Free Regular" !important;
+            font-weight: 900 !important;
+            display: inline-block;
+            font-style: normal;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            font-variant: normal;
+        }
+        i.fa-brands, i.fab { font-family: "Font Awesome 6 Brands" !important; }
+        i.fa-regular, i.far { font-family: "Font Awesome 6 Free Regular" !important; font-weight: 400 !important; }
+
+        /* === ACCESSIBILITY: Focus Visible Outline === */
+        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+            outline: 2px solid #0F766E;
+            outline-offset: 2px;
+            border-radius: 6px;
+        }
+
+        /* === PRELOADER STYLES === */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #F8FAFC;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-content {
+            text-align: center;
+        }
+        .loader-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 16px;
+            animation: heartbeat 1.2s infinite;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .loader-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #0F766E;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+        .loader-bar {
+            width: 150px;
+            height: 4px;
+            background-color: #CCFBF1;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        .loader-progress {
+            width: 40%;
+            height: 100%;
+            background-color: #0F766E;
+            border-radius: 4px;
+            animation: loading 1.2s infinite ease-in-out;
+        }
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(350%); }
         }
     </style>
 
@@ -149,15 +230,7 @@
       },
       "openingHoursSpecification": {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday"
-        ],
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
         "opens": "08:00",
         "closes": "21:00"
       },
@@ -169,7 +242,25 @@
     }
     </script>
 </head>
-<body class="antialiased selection:bg-brand-500 selection:text-white">
+<body class="antialiased selection:bg-brand-700 selection:text-white">
+
+    <!-- ===== PRELOADER ===== -->
+    <div id="preloader">
+        <div class="loader-content">
+            <div class="loader-icon">
+                <!-- Inline SVG so it renders instantly without waiting for Font Awesome -->
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 8H17V6C17 4.897 16.103 4 15 4H9C7.897 4 7 4.897 7 6V8H5C3.897 8 3 8.897 3 10V18C3 19.103 3.897 20 5 20H19C20.103 20 21 19.103 21 18V10C21 8.897 20.103 8 19 8ZM9 6H15V8H9V6ZM19 18H5V10H19V18Z" fill="#0F766E"/>
+                    <path d="M12 11C10.346 11 9 12.346 9 14C9 15.654 10.346 17 12 17C13.654 17 15 15.654 15 14C15 12.346 13.654 11 12 11ZM12 15C11.448 15 11 14.552 11 14C11 13.448 11.448 13 12 13C12.552 13 13 13.448 13 14C13 14.552 12.552 15 12 15Z" fill="#14B8A6"/>
+                </svg>
+            </div>
+            <div class="loader-text">FATIMA MEDICOSE</div>
+            <div class="loader-bar"><div class="loader-progress"></div></div>
+        </div>
+    </div>
+
+    <!-- Skip to Content for Accessibility -->
+    <a href="#home" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-brand-700 text-white px-4 py-2 rounded z-50">Skip to content</a>
 
     <!-- Top Announcement Bar -->
     <div class="bg-brand-900 text-white text-xs font-medium py-2 px-4">
@@ -187,7 +278,7 @@
                 <a href="tel:+916006165191" class="hover:text-brand-100 transition flex items-center gap-1">
                     <i class="fa-solid fa-phone text-accent-500"></i> +91 60061 65191
                 </a>
-                <span class="bg-emerald-500/20 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1">
+                <span class="bg-emerald-500/20 text-emerald-200 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1">
                     <i class="fa-solid fa-star text-amber-400"></i> 5.0 Google Rating
                 </span>
             </div>
@@ -240,7 +331,7 @@
                 </div>
 
                 <!-- Mobile Menu Toggle Button -->
-                <button type="button" id="mobileMenuBtn" aria-label="Toggle Menu" aria-expanded="false" class="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 transition focus:outline-none">
+                <button type="button" id="mobileMenuBtn" aria-label="Toggle Menu" aria-expanded="false" aria-controls="mobileMenu" class="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 transition focus:outline-none">
                     <i class="fa-solid fa-bars text-xl" id="menuIcon"></i>
                 </button>
             </div>
@@ -302,7 +393,7 @@
                         <div class="flex flex-col sm:flex-row items-center gap-2">
                             <div class="flex items-center gap-2 w-full px-3 py-2 text-slate-400">
                                 <i class="fa-solid fa-magnifying-glass text-brand-600"></i>
-                                <input type="text" id="heroMedicineSearch" placeholder="Search medicines, diabetic care, baby products..." class="w-full text-sm text-slate-800 bg-transparent focus:outline-none placeholder-slate-400" onkeydown="if(event.key==='Enter') handleMedicineSearch()">
+                                <input type="text" id="heroMedicineSearch" placeholder="Search medicines, diabetic care, baby products..." class="w-full text-sm text-slate-800 bg-transparent focus:outline-none placeholder-slate-400" onkeydown="if(event.key==='Enter') handleMedicineSearch()" aria-label="Search medicines">
                             </div>
                             <button type="button" onclick="handleMedicineSearch()" class="w-full sm:w-auto bg-brand-700 hover:bg-brand-800 text-white text-xs font-semibold px-5 py-3 rounded-xl transition whitespace-nowrap">
                                 Find Medicine
@@ -766,7 +857,7 @@
 
                         <div>
                             <label for="patientPhone" class="block text-xs font-semibold text-slate-700 mb-1">Mobile Phone Number *</label>
-                            <input type="tel" id="patientPhone" required placeholder="10-digit mobile number" pattern="[0-9]{10}" class="w-full text-xs p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                            <input type="tel" id="patientPhone" required placeholder="10-digit mobile number" pattern="[0-9]{10}" title="Please enter exactly 10 digits" class="w-full text-xs p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
                         </div>
 
                         <div>
@@ -923,8 +1014,9 @@
                         <div class="w-24 h-24 rounded-full bg-brand-100 mx-auto mb-4 overflow-hidden border-2 border-brand-500">
                             <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=300&q=80" alt="Dr. A. R. Bhat" class="w-full h-full object-cover">
                         </div>
-                        <h3 class="font-bold text-lg text-slate-900">Dr. A. R. Bhat</h3>
-                        <p class="text-xs text-brand-700 font-semibold mb-2">MBBS, MD (General Medicine)</p>
+                        <h3 class="font-bold text-lg text-slate-900">Dr zia 
+</h3>
+                        <p class="text-xs text-brand-700 font-semibold mb-2">dermatologist</p>
                         <p class="text-xs text-slate-500 mb-4">Consultant Physician with 12+ years of experience in managing diabetes, hypertension, fever, and internal medicine.</p>
                         
                         <div class="bg-slate-50 p-3 rounded-xl text-left text-xs space-y-1 mb-6 border border-slate-100">
@@ -1009,11 +1101,7 @@
             
             <div class="text-center max-w-2xl mx-auto mb-14">
                 <div class="inline-flex items-center gap-1.5 text-amber-500 text-sm mb-2">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     <span class="text-slate-800 font-bold ml-1">5.0 / 5.0 Rating</span>
                 </div>
                 <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">Loved by Local Residents</h2>
@@ -1030,9 +1118,7 @@
                         " Fatima Medicose is the most reliable pharmacy in Barsoo. I uploaded my elderly father's prescription via WhatsApp and they had all medicines packed ready for me near the Petrol Pump bypass within 10 minutes! "
                     </p>
                     <div class="flex items-center gap-3 pt-2 border-t border-slate-200/60">
-                        <div class="w-9 h-9 rounded-full bg-brand-700 text-white flex items-center justify-center font-bold text-xs">
-                            S
-                        </div>
+                        <div class="w-9 h-9 rounded-full bg-brand-700 text-white flex items-center justify-center font-bold text-xs">S</div>
                         <div>
                             <h4 class="text-xs font-bold text-slate-900">Shabir Ahmad Wani</h4>
                             <p class="text-[10px] text-slate-400">Barsoo Local Resident</p>
@@ -1048,9 +1134,7 @@
                         " Great experience for blood sample collection. The technician came to our home on time, took sample gently, and I received official WhatsApp report the same evening. Outstanding healthcare service! "
                     </p>
                     <div class="flex items-center gap-3 pt-2 border-t border-slate-200/60">
-                        <div class="w-9 h-9 rounded-full bg-accent-600 text-white flex items-center justify-center font-bold text-xs">
-                            M
-                        </div>
+                        <div class="w-9 h-9 rounded-full bg-accent-600 text-white flex items-center justify-center font-bold text-xs">M</div>
                         <div>
                             <h4 class="text-xs font-bold text-slate-900">Mubeena Akhtar</h4>
                             <p class="text-[10px] text-slate-400">Gulshan Mohalla</p>
@@ -1066,9 +1150,7 @@
                         " Staff is extremely polite and genuine. Unlike other shops, they check doctor's dosage clearly and provide authentic medicine brands. Highly recommended for all baby care and diabetic supplies. "
                     </p>
                     <div class="flex items-center gap-3 pt-2 border-t border-slate-200/60">
-                        <div class="w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs">
-                            F
-                        </div>
+                        <div class="w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs">F</div>
                         <div>
                             <h4 class="text-xs font-bold text-slate-900">Fayaz Mir</h4>
                             <p class="text-[10px] text-slate-400">Awantipora / Barsoo</p>
@@ -1105,7 +1187,7 @@
             </div>
 
             <div class="space-y-3" id="faqContainer">
-                
+                <!-- FAQ Items 1-15 Same as original, omitted here for brevity but included in final file -->
                 <div class="faq-item bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-sm">
                     <button type="button" onclick="toggleFaq(1)" class="w-full text-left p-4 sm:p-5 flex justify-between items-center gap-4 font-semibold text-slate-900 text-sm sm:text-base focus:outline-none">
                         <span class="faq-question">1. How do I upload a prescription on Fatima Medicose website?</span>
@@ -1281,9 +1363,7 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-slate-900 text-sm">Store Address</h4>
-                                <p class="text-xs text-slate-600 mt-0.5 leading-relaxed">
-                                    Fatima Medicose, BYPASS, Near Petrol Pump, Gulshan Mohalla, Barsoo, Jammu & Kashmir – 191131
-                                </p>
+                                <p class="text-xs text-slate-600 mt-0.5 leading-relaxed">Fatima Medicose, BYPASS, Near Petrol Pump, Gulshan Mohalla, Barsoo, Jammu & Kashmir – 191131</p>
                             </div>
                         </div>
 
@@ -1293,9 +1373,7 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-slate-900 text-sm">Phone Number</h4>
-                                <a href="tel:+916006165191" class="text-xs text-brand-700 font-semibold hover:underline mt-0.5 block">
-                                    📞 +91 60061 65191 / 06006165191
-                                </a>
+                                <a href="tel:+916006165191" class="text-xs text-brand-700 font-semibold hover:underline mt-0.5 block">📞 +91 60061 65191 / 06006165191</a>
                             </div>
                         </div>
 
@@ -1305,9 +1383,7 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-slate-900 text-sm">WhatsApp Chat</h4>
-                                <a href="https://wa.me/916006165191" target="_blank" class="text-xs text-emerald-600 font-semibold hover:underline mt-0.5 block">
-                                    💬 +91 60061 65191 (Click to Chat)
-                                </a>
+                                <a href="https://wa.me/916006165191" target="_blank" class="text-xs text-emerald-600 font-semibold hover:underline mt-0.5 block">💬 +91 60061 65191 (Click to Chat)</a>
                             </div>
                         </div>
 
@@ -1317,9 +1393,7 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-slate-900 text-sm">Email Address</h4>
-                                <a href="mailto:info@fatimamedicose.in" class="text-xs text-slate-600 hover:underline mt-0.5 block">
-                                    info@fatimamedicose.in
-                                </a>
+                                <a href="mailto:info@fatimamedicose.in" class="text-xs text-slate-600 hover:underline mt-0.5 block">info@fatimamedicose.in</a>
                             </div>
                         </div>
 
@@ -1346,11 +1420,11 @@
 
                 <!-- Google Map Embed & Contact Form Card -->
                 <div class="lg:col-span-7 space-y-6">
-                    
+                    <!-- Replaced dummy map with a search query embed for better accuracy -->
                     <div class="rounded-3xl overflow-hidden shadow-lg border border-slate-200 bg-slate-100 h-80 relative">
                         <iframe 
                             title="Fatima Medicose Store Location Map"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.123456789!2d75.0167!3d33.9167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDU1JzAwLjEiTiA3NcKwMDEnMDA4LjEiRQ!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin" 
+                            src="https://www.google.com/maps?q=Fatima+Medicose+Barsoo&output=embed" 
                             width="100%" 
                             height="100%" 
                             style="border:0;" 
@@ -1367,12 +1441,10 @@
                         <form onsubmit="handleContactMessage(event)" class="space-y-3">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <input type="text" id="contactName" required placeholder="Your Name" class="w-full text-xs p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-500">
-                                <input type="tel" id="contactPhone" required placeholder="Phone Number (10 digits)" pattern="[0-9]{10}" class="w-full text-xs p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-500">
+                                <input type="tel" id="contactPhone" required placeholder="Phone Number (10 digits)" pattern="[0-9]{10}" title="Please enter exactly 10 digits" class="w-full text-xs p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-500">
                             </div>
                             <textarea id="contactMessage" rows="3" required placeholder="Write your query or requested medicine list here..." class="w-full text-xs p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-500"></textarea>
-                            <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-3 rounded-xl transition">
-                                Send Inquiry Message
-                            </button>
+                            <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-3 rounded-xl transition">Send Inquiry Message</button>
                         </form>
                     </div>
 
@@ -1397,9 +1469,7 @@
                             <span class="font-heading font-bold text-lg text-brand-500">MEDICOSE</span>
                         </div>
                     </div>
-                    <p class="text-slate-400 leading-relaxed pr-6">
-                        Fatima Medicose is Barsoo’s premier pharmacy and healthcare hub. Dedicated to offering authentic pharmaceuticals, fast diagnostic laboratory testing, and expert specialist consultations to the community of Jammu & Kashmir.
-                    </p>
+                    <p class="text-slate-400 leading-relaxed pr-6">Fatima Medicose is Barsoo’s premier pharmacy and healthcare hub. Dedicated to offering authentic pharmaceuticals, fast diagnostic laboratory testing, and expert specialist consultations to the community of Jammu & Kashmir.</p>
                     <div class="flex items-center gap-3 pt-2">
                         <a href="https://www.facebook.com/share/1BzJwwyvKY/" target="_blank" aria-label="Facebook Page" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-brand-700 text-slate-300 hover:text-white flex items-center justify-center transition">
                             <i class="fa-brands fa-facebook-f"></i>
@@ -1440,11 +1510,7 @@
 
                 <div class="space-y-3">
                     <h4 class="font-bold text-white text-sm">Store Address</h4>
-                    <p class="text-slate-400 leading-relaxed">
-                        📍 BYPASS, Near Petrol Pump,<br>
-                        Gulshan Mohalla, Barsoo,<br>
-                        Jammu & Kashmir – 191131
-                    </p>
+                    <p class="text-slate-400 leading-relaxed">📍 BYPASS, Near Petrol Pump,<br>Gulshan Mohalla, Barsoo,<br>Jammu & Kashmir – 191131</p>
                     <p class="text-slate-400">☎ Call: +91 60061 65191</p>
                     <p class="text-slate-400">✉ Email: info@fatimamedicose.in</p>
                 </div>
@@ -1466,12 +1532,10 @@
     </footer>
 
     <!-- FLOATING ACTION BUTTONS -->
-    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
         <a href="https://wa.me/916006165191?text=Hello%20Fatima%20Medicose,%20I%20have%20an%20inquiry." target="_blank" aria-label="WhatsApp Chat" class="w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center text-3xl shadow-2xl transition transform hover:scale-110 relative group">
             <i class="fa-brands fa-whatsapp"></i>
-            <span class="absolute right-16 bg-slate-900 text-white text-xs font-semibold px-3 py-1.5 rounded-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition duration-200 pointer-events-none shadow-md">
-                Chat on WhatsApp
-            </span>
+            <span class="absolute right-16 bg-slate-900 text-white text-xs font-semibold px-3 py-1.5 rounded-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition duration-200 pointer-events-none shadow-md">Chat on WhatsApp</span>
         </a>
     </div>
 
@@ -1494,13 +1558,9 @@
                 <i class="fa-solid fa-check"></i>
             </div>
             <h3 class="font-bold text-xl text-slate-900" id="modalTitle">Request Received!</h3>
-            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed" id="modalDesc">
-                Thank you! Our registered pharmacist at Fatima Medicose has received your prescription order and will contact you via phone/WhatsApp within 10-15 minutes.
-            </p>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed" id="modalDesc">Thank you! Our registered pharmacist at Fatima Medicose has received your prescription order and will contact you via phone/WhatsApp within 10-15 minutes.</p>
             <div class="pt-2">
-                <button type="button" onclick="closeModal('successModal')" class="w-full bg-brand-700 text-white font-bold text-xs py-3 rounded-xl hover:bg-brand-800 transition">
-                    Great, Close
-                </button>
+                <button type="button" onclick="closeModal('successModal')" class="w-full bg-brand-700 text-white font-bold text-xs py-3 rounded-xl hover:bg-brand-800 transition">Great, Close</button>
             </div>
         </div>
     </div>
@@ -1510,9 +1570,7 @@
         <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                 <h3 class="font-bold text-base text-slate-900">Book Diagnostic Test</h3>
-                <button type="button" onclick="closeModal('labModal')" aria-label="Close Modal" class="text-slate-400 hover:text-slate-600 text-lg">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <button type="button" onclick="closeModal('labModal')" aria-label="Close Modal" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="handleLabBookingSubmit(event)" class="space-y-3">
                 <div>
@@ -1525,7 +1583,7 @@
                 </div>
                 <div>
                     <label for="labPatientPhone" class="block text-[11px] font-semibold text-slate-700 mb-1">Mobile Phone *</label>
-                    <input type="tel" id="labPatientPhone" required placeholder="10-digit phone" pattern="[0-9]{10}" class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-500">
+                    <input type="tel" id="labPatientPhone" required placeholder="10-digit phone" pattern="[0-9]{10}" title="Please enter exactly 10 digits" class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-500">
                 </div>
                 <div>
                     <label for="labLocationType" class="block text-[11px] font-semibold text-slate-700 mb-1">Preferred Location</label>
@@ -1534,9 +1592,7 @@
                         <option value="Store Visit">Visit Store Diagnostic Desk</option>
                     </select>
                 </div>
-                <button type="submit" class="w-full bg-brand-700 hover:bg-brand-800 text-white font-bold text-xs py-3 rounded-xl transition">
-                    Confirm Lab Appointment
-                </button>
+                <button type="submit" class="w-full bg-brand-700 hover:bg-brand-800 text-white font-bold text-xs py-3 rounded-xl transition">Confirm Lab Appointment</button>
             </form>
         </div>
     </div>
@@ -1546,9 +1602,7 @@
         <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                 <h3 class="font-bold text-base text-slate-900">Doctor Appointment</h3>
-                <button type="button" onclick="closeModal('doctorModal')" aria-label="Close Modal" class="text-slate-400 hover:text-slate-600 text-lg">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <button type="button" onclick="closeModal('doctorModal')" aria-label="Close Modal" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="handleDoctorBookingSubmit(event)" class="space-y-3">
                 <div>
@@ -1561,15 +1615,13 @@
                 </div>
                 <div>
                     <label for="docPatientPhone" class="block text-[11px] font-semibold text-slate-700 mb-1">Mobile Phone *</label>
-                    <input type="tel" id="docPatientPhone" required placeholder="10-digit phone" pattern="[0-9]{10}" class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-500">
+                    <input type="tel" id="docPatientPhone" required placeholder="10-digit phone" pattern="[0-9]{10}" title="Please enter exactly 10 digits" class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-brand-500">
                 </div>
                 <div>
                     <label for="docDate" class="block text-[11px] font-semibold text-slate-700 mb-1">Preferred Date</label>
                     <input type="date" id="docDate" required class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
                 </div>
-                <button type="submit" class="w-full bg-brand-700 hover:bg-brand-800 text-white font-bold text-xs py-3 rounded-xl transition">
-                    Confirm Appointment Slot
-                </button>
+                <button type="submit" class="w-full bg-brand-700 hover:bg-brand-800 text-white font-bold text-xs py-3 rounded-xl transition">Confirm Appointment Slot</button>
             </form>
         </div>
     </div>
@@ -1579,17 +1631,13 @@
         <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl space-y-6">
             <div class="flex justify-between items-center border-b border-slate-200 pb-4">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold">
-                        <i class="fa-solid fa-user-gear"></i>
-                    </div>
+                    <div class="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold"><i class="fa-solid fa-user-gear"></i></div>
                     <div>
                         <h3 class="font-bold text-base text-slate-900">Fatima Medicose – Admin CMS Portal</h3>
                         <p class="text-[10px] text-slate-400">Live Management Dashboard & Upload Log</p>
                     </div>
                 </div>
-                <button type="button" onclick="closeModal('adminModal')" aria-label="Close Admin Modal" class="text-slate-400 hover:text-slate-700 text-xl">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <button type="button" onclick="closeModal('adminModal')" aria-label="Close Admin Modal" class="text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -1630,14 +1678,14 @@
                                 <td class="p-3">+91 94190*****</td>
                                 <td class="p-3">Prescription Upload</td>
                                 <td class="p-3"><span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded">Ready for Pickup</span></td>
-                                <td class="p-3"><button type="button" onclick="alert('Contacting patient via WhatsApp...')" class="text-brand-700 font-bold hover:underline">Process</button></td>
+                                <td class="p-3"><button type="button" onclick="showToast('Contacting patient via WhatsApp...')" class="text-brand-700 font-bold hover:underline">Process</button></td>
                             </tr>
                             <tr>
                                 <td class="p-3 font-medium">Amina Begum</td>
                                 <td class="p-3">+91 97971*****</td>
                                 <td class="p-3">Lab Test (CBC)</td>
                                 <td class="p-3"><span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded">Sample Collected</span></td>
-                                <td class="p-3"><button type="button" onclick="alert('Uploading PDF report...')" class="text-brand-700 font-bold hover:underline">Upload Report</button></td>
+                                <td class="p-3"><button type="button" onclick="showToast('Uploading PDF report...')" class="text-brand-700 font-bold hover:underline">Upload Report</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1645,9 +1693,7 @@
             </div>
 
             <div class="text-right border-t border-slate-100 pt-3">
-                <button type="button" onclick="closeModal('adminModal')" class="bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-semibold px-4 py-2 rounded-xl">
-                    Close Admin View
-                </button>
+                <button type="button" onclick="closeModal('adminModal')" class="bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-semibold px-4 py-2 rounded-xl">Close Admin View</button>
             </div>
         </div>
     </div>
@@ -1657,9 +1703,7 @@
         <div class="bg-white rounded-3xl p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                 <h3 class="font-bold text-base text-slate-900">Privacy Policy</h3>
-                <button type="button" onclick="closeModal('privacyModal')" aria-label="Close Privacy Modal" class="text-slate-400 hover:text-slate-600">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <button type="button" onclick="closeModal('privacyModal')" aria-label="Close Privacy Modal" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="text-xs text-slate-600 space-y-2 leading-relaxed">
                 <p>Fatima Medicose respects patient confidentiality. Personal information, contact phone numbers, and uploaded prescription files are stored securely and utilized solely for medicine fulfillment and healthcare consultation purposes.</p>
@@ -1672,9 +1716,7 @@
         <div class="bg-white rounded-3xl p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                 <h3 class="font-bold text-base text-slate-900">Terms of Service</h3>
-                <button type="button" onclick="closeModal('termsModal')" aria-label="Close Terms Modal" class="text-slate-400 hover:text-slate-600">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <button type="button" onclick="closeModal('termsModal')" aria-label="Close Terms Modal" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="text-xs text-slate-600 space-y-2 leading-relaxed">
                 <p>Prescription medicines will only be dispensed upon verification of a valid prescription signed by a registered medical practitioner.</p>
@@ -1687,9 +1729,7 @@
         <div class="bg-white rounded-3xl p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                 <h3 class="font-bold text-base text-slate-900">Refund & Return Policy</h3>
-                <button type="button" onclick="closeModal('refundModal')" aria-label="Close Refund Modal" class="text-slate-400 hover:text-slate-600">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <button type="button" onclick="closeModal('refundModal')" aria-label="Close Refund Modal" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="text-xs text-slate-600 space-y-2 leading-relaxed">
                 <p>Unopened and undamaged medication strips can be returned with receipt within 7 days of purchase.</p>
@@ -1698,8 +1738,41 @@
         </div>
     </div>
 
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer" class="fixed bottom-24 sm:bottom-6 left-1/2 -translate-x-1/2 z-[9999] flex flex-col items-center gap-2 pointer-events-none"></div>
+
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        // ===== PRELOADER LOGIC =====
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                setTimeout(() => {
+                    preloader.classList.add('hidden');
+                }, 300); // Small delay for smooth transition
+            }
+        });
+
+        // ===== TOAST NOTIFICATION SYSTEM =====
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'bg-slate-900 text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 pointer-events-auto transition-all duration-300 opacity-0 translate-y-4';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i> ${message}`;
+            container.appendChild(toast);
+            
+            // Animate in
+            requestAnimationFrame(() => {
+                toast.classList.remove('opacity-0', 'translate-y-4');
+            });
+
+            // Animate out and remove
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
         // Store Status Auto-Detector (8 AM - 9 PM)
         function updateStoreStatus() {
             const now = new Date();
@@ -1799,7 +1872,7 @@
 
         function processFile(file) {
             if (file.size > 10 * 1024 * 1024) {
-                alert('File size exceeds 10MB limit. Please select a smaller file.');
+                showToast('File size exceeds 10MB limit.');
                 return;
             }
             selectedFileObj = file;
@@ -1840,7 +1913,7 @@
         function handleMedicineSearch() {
             const query = document.getElementById('heroMedicineSearch').value.trim();
             if(!query) {
-                alert('Please enter a medicine name or product to search.');
+                showToast('Please enter a medicine name or product to search.');
                 return;
             }
             window.open(`https://wa.me/916006165191?text=Hello%20Fatima%20Medicose,%20is%20${encodeURIComponent(query)}%20available%20in%20stock?`, '_blank');
@@ -1886,6 +1959,7 @@
             document.getElementById('modalTitle').innerText = 'Message Sent!';
             document.getElementById('modalDesc').innerText = 'Thank you for reaching out to Fatima Medicose. We will reply to your query promptly.';
             openModal('successModal');
+            e.target.reset();
         }
 
         function openAdminModal() {
@@ -1893,4 +1967,4 @@
         }
     </script>
 </body>
-</html>
+                                                            </html>
